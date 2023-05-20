@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/*Raíz do website*/
+:root { 
+    font-size: 16px; /*Garante o tamanho padrão de fonte*/
+}
+
+
+/*O seletor Webkit é um mecanismo que permite que a gente renderize e modifique os elementos do navegador*/
+::-webkit-scrollbar {
+    width: 8px; /*Define a largura da scrollbar*/
+}
+
+::-webkit-scrollbar-track {
+    background-color: #2c2c31; /*Define a cor de caminho da scrollbar*/
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #9e9ea0; /*Define a cor da scrollbar*/
+}
+
+
+/*O keyframes é um recurso do CSS que permite criar animações personalizadas, definindo diferentes estágios e estilos para os elementos ao longo da animação;*/
+@keyframes entering {
+    from {
+        opacity: 0;
+        transform: translateY(-200px); /*Manipula posição na vertical*/
+    }
+    to {
+        transform: translateY(0px); /*Manipula posição na vertical*/
+    }
+}
+
+body {
+    background-color: #121215;
+    color: #EAEAEa;
+    font-family: 'Roboto', sans-serif;
+
+    display: grid;
+    grid-template-areas: "profile timeline";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100vh;
+}
+
+nav {
+    padding: 64px;
+    grid-area: timeline;
+
+    overflow-y: scroll;
+    animation: entering 0.7s ease-in-out; /*Tempo da manipulação - ease-in-out suaviza a animação*/
+}
+
+.memory {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    text-decoration: none;
+    margin-bottom: 64px;
+}
+
+.memory small {
+    color: #BEBEBF;
+    font-size: 0.75rem; /* 12px/16px = 0.75rem - Proporção de um valor sob o outro para adequar a fonte */
+}
+
+.memory h1 {
+    font-size: 2rem; /* 32px/16px = 2rem - Proporção de um valor sob o outro para adequar a fonte */
+    color: #EAEAEa;
+}
+
+.memory img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+
+    transition: transform 0.3s ease-in-out; /*Suaviza o zoom da imagem - Esse efeito deve ser aplicado diretamente na imagem*/
+}
+
+.memory div {
+    width: 100%;
+    height: 280px;
+    overflow: hidden; /*O que exceder do zoom ele vai esconder*/
+
+}
+
+
+/*O "hover" permite aplicar estilos a um elemento quando o cursor do mouse está sobre ele*/
+.memory:hover img {
+    transform: scale(1.1); /*Dar zoom na imagem*/
+}
+
+.memory p {
+    font-size: 1.2rem; /* 18px/16px = 1.2rem - Proporção de um valor sob o outro para adequar a fonte */
+    color: #BEBEBF;
+    line-height: 28px;
+}
+
+aside {
+    grid-area: profile;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-right: 1px solid; /*Linha central para dividir página em duas*/
+    border-image: linear-gradient(#727275, #2c2c31) 1; /*Gradiente da linha central*/
+
+    background-image: url("./assets/background.svg");
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+aside * { /*Selecionar tudo o que tem dentro do aside sem mexer nos demais itens ja estilizados*/
+    animation: entering 0.7s ease-in-out; /*Tempo da manipulação - ease-in-out suaviza a animação*/
+}
+
+aside img:nth-child(2) {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    background: linear-gradient(#d39e33, #ed5636, #633bbc) padding-box, linear-gradient(260deg, #d39e33, #ed5636, #633bbc)border-box;
+}
+
+aside p {
+    font-size: 2rem; /* 32px/16px = 2rem - Proporção de um valor sob o outro para adequar a fonte */
+    text-align: center;
+}
+
+aside span {
+    font-size: 0.75rem; /* 12px/16px = 0.75rem - Proporção de um valor sob o outro para adequar a fonte */
+    color: #9e9ea0;
+}
+
+
+/*O controle de responsividade ajuda a ajustar o nosso código para que o nosso site consiga se adaptar e ficar bonito também em telas menores*/
+@media (max-width: 768px) { /*Define uma regra que só será aplicada se a largura da tela do dispositivo for menor ou igual a 768px;*/
+    :root {
+        font-size: 12px;
+    }
+    
+    body {
+        grid-template-columns: 1fr; /*As duas colunas se transformam em apenas uma (1 Fração)*/
+        grid-template-rows: 0.2fr 0.8fr; /*20% da fração da tela disponível - 80% para o restante da tela*/
+        grid-template-areas: 
+        "profile" /*Coloca a parte de profile em cima*/
+        "timeline"; /*Coloca a parte de rolagem em baixo*/
+    }
+
+        aside {
+            border-right: none; /*Remove a borda do lado direito*/
+            padding: 32px 12px; /*32 em cima e em baixo e 12 dos lados*/
+        }
+
+        nav {
+            overflow: visible; /*O overflow se aplica a também a nav*/
+            padding: 22px; /*Define um novo espaçamento entre o conteúdo e as laterais (Nesse caso menor que o anterior)*/
+        }
+    }
